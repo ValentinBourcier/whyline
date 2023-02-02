@@ -1,22 +1,44 @@
 <?xml version="1.0"?>
 
 <!-- Handle the jar target by default -->
-<project name="Whyline" default="make-and-copy-jar" basedir=".">
+<project name="Whyline" default="package" basedir=".">
 
 	<description>
 		Build a whyline.jar file that contains all code necessary for execution and tracing.
 	</description>
 
 	<property name="build" location="build" />
-	<property name="whyline-jar" location="${build}/whyline.jar" />
-	<property name="osx-app" location="${build}/Whyline.app" />
-	<property name="osx-app-jar-folder" location="${osx-app}/Contents/Resources/Java" />
+	<property name="classes" location="${build}/classes" />
+	<property name="archive" location="${build}/whyline.jar" />
 
-	<delete file="${whyline-jar}" />
+	<property name="sources" location="edu" />
+	<property name="librairies" location="lib" />
 	
-	<target name="make-and-copy-jar">
-    	<jar destfile="${whyline-jar}">
-    	
+	<property name="ui-resources" location="edu/cmu/hcii/whyline/ui/images" />
+	<property name="ui-resources-target" location="${classes}/edu/cmu/hcii/whyline/ui/images" />
+
+	<path id="librairies-classes">
+		<fileset dir="${librairies}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="clean" >
+		<delete dir="${build}" />
+	</target>
+
+	<target name="build" depends="clean">
+		<mkdir dir="${classes}"/>
+		<javac srcdir="${sources}" destdir="${classes}" includeantruntime="false" encoding="iso-8859-1">
+			<classpath refid="librairies-classes"/>
+		</javac>
+		<copy todir="${ui-resources-target}">
+			<fileset dir="${ui-resources}" excludes="**/*.java"/>
+		</copy>
+	</target>
+
+	<target name="package" depends="build">
+		<jar destfile="${archive}">
     		<!-- Create a manifest suitable for tracing and analysis. -->
     		<manifest>
         		<attribute name="Manifest-Version" value="1.0"/>    		
@@ -26,23 +48,11 @@
     		</manifest>
     		
     		<!-- Include all of the compiled Whyline classes -->
-    		<fileset dir="classes" includes="**/*.class" />
-      		<fileset dir="classes" includes="**/*.png" />
-      		<fileset dir="classes" includes="**/*.gif" />
-      		<fileset dir="classes" includes="**/*.jpg" />
+    		<fileset dir="${classes}" />
 
-    		<!-- Include all of the classfiles in the trove library -->
-      		<zipfileset src="lib/trove.jar" />
-
-    	</jar>
-    	
-    	<!-- Copy the newly created jar file to the appropriate OS X bundle folder -->
-    	<copy
-	    	file="${whyline-jar}"
-    		overwrite="true"
-    		todir="${osx-app-jar-folder}"
-    	/>
-		
+			<!-- Include all of the classfiles in the trove library -->
+      		<zipfileset src="${librairies}/trove.jar" />
+    	</jar>		
 	</target>
 
 </project>

@@ -46,11 +46,13 @@ public abstract class ExplanationBlock extends Explanation {
 
 		EventKind kind = answer.trace.getKind(explanation.getEventID());
 		
+		Object questionSub = answer.getQuestion().getSubject();
+
 		// We only include values produced if they're IO or they are the subject of the question.
 		if(kind.isValueProduced) {
 			if(kind.isInstantiation) return true;
 			if(answer.trace.getInstruction(explanation.getEventID()).isIO()) return true;
-			else if(answer.getQuestion().getSubject() instanceof Integer && explanation.getEventID() == (Integer)answer.getQuestion().getSubject()) return true;
+			else if(questionSub instanceof Integer && explanation.getEventID() == (Integer) questionSub) return true;
 			else if(answer instanceof CauseAnswer && ((CauseAnswer)answer).getEventID() == explanation.getEventID()) return true;
 			else if(answer instanceof ThisCodeDidExecuteAnswer && ((ThisCodeDidExecuteAnswer)answer).containsEventID(explanation.getEventID())) return true;
 			else if(answer instanceof UnexecutedAnswer) {

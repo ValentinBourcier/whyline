@@ -16,19 +16,19 @@ public class MacLauncherUI extends LauncherUI {
 		
 		super();
 		
-		com.apple.mrj.MRJApplicationUtils.registerQuitHandler(new com.apple.mrj.MRJQuitHandler() {
-			public void handleQuit() throws IllegalStateException {
+		// com.apple.mrj.MRJApplicationUtils.registerQuitHandler(new com.apple.mrj.MRJQuitHandler() {
+		// 	public void handleQuit() throws IllegalStateException {
 				
-				saveConfigurations();
+		// 		saveConfigurations();
 				
-				Vector<WhylineUI> windows = new Vector<WhylineUI>(openWindows);
-				for(WhylineUI whylineUI : windows)
-					if(whylineUI.isVisible())
-						if(whylineUI.saveIfNecessaryThenClose())
-							return;
-				System.exit(0);
-			}
-		});
+		// 		Vector<WhylineUI> windows = new Vector<WhylineUI>(openWindows);
+		// 		for(WhylineUI whylineUI : windows)
+		// 			if(whylineUI.isVisible())
+		// 				if(whylineUI.saveIfNecessaryThenClose())
+		// 					return;
+		// 		System.exit(0);
+		// 	}
+		// });
 
 	}
 	

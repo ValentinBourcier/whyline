@@ -1018,8 +1018,8 @@ public final class Tracer {
 		}
 		else if(c instanceof java.awt.peer.ComponentPeer){
 			id = getUniqueObjectID(c);
-			width = ((java.awt.peer.ComponentPeer)c).getBounds().width;
-			height = ((java.awt.peer.ComponentPeer)c).getBounds().height;
+			width = ((java.awt.peer.ComponentPeer)c).getPreferredSize().width;
+			height = ((java.awt.peer.ComponentPeer)c).getPreferredSize().height;
 		}
 		else {
 			
