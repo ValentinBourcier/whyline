@@ -31,6 +31,64 @@ The best way to learn the architecture of the tool is to read the articles above
 
 I spent some time documenting design rationale in comments in the trickier components (mostly because I have a practice of self-explaining the more complicated elements of implementations in comments), but if there's anything you're having trouble understanding, write me, and I'll patch the code with a comment.
 
+## Building Whyline
+
+**Requirements:**
+
+- Java 1.8 JDK: https://adoptium.net/temurin/releases/?version=8
+- Apache Ant: https://ant.apache.org/manual/install.html
+
+On MacOS, both can be installed using homebrew:
+
+```shell
+brew install openjdk@8
+brew install ant
+```
+
+Set the `JAVA_HOME` environment:
+
+```shell
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0`
+```
+
+This line should be in a `.bashrc/`, `.zshrc` file if you want the setting to be persistent.
+
+
+**Building the project**
+
+After cloning the branch [update-build-file](https://github.com/ValentinBourcier/whyline/tree/update-build-file) of the project execute:
+
+```shell
+cd whyline
+ant package
+```
+
+The project should compile with no errors.
+
+**Launching the project**
+
+After packaging the project, switch to the `build` directory:
+
+```shell
+cd build
+```
+
+And launch the .jar file:
+
+```shell
+java -jar whyline.jar
+```
+
+**Configuring Whyline**
+
+Go to the `Parameters` menu and indicate the path to your JDK.
+To find the path of that JDK you can execute one of the following commands (on Unix based systems):
+
+```shell
+/usr/libexec/java_home -V # All java versions and their path.
+/usr/libexec/java_home -v 1.8.0 # Java 8 path.
+```
+
 ## Support
 
 Unfortunately, because I've long since moved on to other projects, I cannot support this code or develop it further. Fork it, patch it, extend it: do whatever you like with it. It's here for the public good as an archive for future generations of developer tool developers. I'd love to see what you do with it! I love to hear stories about how people are building upon the work.
